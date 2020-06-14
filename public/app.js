@@ -4,8 +4,9 @@ var toggle = 0;
 var keyPress;
 var collision = [];
 var cameraPos = new THREE.Vector3();
-var dataCounter=0;
-var spaceCounter = false;
+var xCoord;
+var yCoord;
+var zCoord;
 
 var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.5, 1000); 
 
@@ -53,7 +54,7 @@ light.position.set(2,5,3);
 
 
 
-scene.add(light, groundMesh, skyMesh);
+scene.add(light, groundMesh, spheres[0],skyMesh);
 
 
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -65,6 +66,7 @@ document.body.appendChild(renderer.domElement);
 window.addEventListener('resize', onWindowResize, false);  
     
 window.addEventListener('keyup', function (e) {
+    console.log("pressed");
     keyPress = e.keyCode;
     });
 
@@ -78,40 +80,49 @@ function writeUserData(x,y,z) {
         });
     }
 
-    if (spaceCounter == true) {
-        firebase.database().ref('X').on('value', function(snapshot) {
-            console.log("read");
-                          //spheres.push(new THREE.Mesh(pearlGeometry, pearlMaterial));
-                          //spheres[spheres.length-1].position.set(snapshot.child("X").val(), snapshot.child("Y").val(), snapshot.child("Z").val());
-                         // scene.add(spheres[spheres.length-1]);
-                          
-         });
-    }
+  
+
+    firebase.database().ref('sphereAdded/X').on('value', function(snapshot) {
+        xCoord = snapshot.val();
+        console.log("X read");
+        spheres.push(new THREE.Mesh(pearlGeometry, pearlMaterial));
+        spheres[spheres.length-1].position.x=xCoord;
+        });
+    firebase.database().ref('sphereAdded/Y').on('value', function(snapshot) {
+        yCoord = snapshot.val();
+        console.log("Y read");
+        spheres[spheres.length-1].position.y=yCoord;
+    });
+    firebase.database().ref('sphereAdded/Z').on('value', function(snapshot) {
+        zCoord = snapshot.val();
+        console.log("Z read");
+        spheres[spheres.length-1].position.z=zCoord;
+        scene.add(spheres[spheres.length-1]);   
+    });
+
+
+    
 
 
 function draw() {
-    if (spaceCounter == false && keyPress == 32) {
-        spaceCounter = true;
-        scene.add(spheres[0]);
-        keyPress = 0;
-    }
     
-    if (spaceCounter == true) {
+    
     camera.getWorldPosition(cameraPos);
     var direction = cameraPos.clone().negate().normalize();
     var rayCaster = new THREE.Raycaster(cameraPos, direction); 
     collision = rayCaster.intersectObjects(spheres); 
 
-    if (toggle%2 == 0 && spaceCounter==true) {
+    if (toggle%2 == 0) {
         scene.add(transparentPearl);
         transparentPearl.position.set(collision[0].point.x, collision[0].point.y, collision[0].point.z);
         if (keyPress == 32) {
-           //spheres.push(new THREE.Mesh(pearlGeometry, pearlMaterial));
-        // spheres[spheres.length-1].position.set(collision[0].point.x, collision[0].point.y, collision[0].point.z);
+            //spheres.push(new THREE.Mesh(pearlGeometry, pearlMaterial));
+            //spheres[spheres.length-1].position.set(collision[0].point.x, collision[0].point.y, collision[0].point.z);
         // scene.add(spheres[spheres.length-1]);
-            keyPress = 0;
-            writeUserData(collision[0].point.x, collision[0].point.y, collision[0].point.z);
+            
+            writeUserData(transparentPearl.position.x, transparentPearl.position.y, transparentPearl.position.z);
             console.log("write success");
+            keyPress = 0;
         }
     }
 
@@ -141,15 +152,14 @@ function draw() {
             scene.remove(spheres[sphereIndex]);
             spheres.splice(sphereIndex,1);
             keyPress = 0;
-            dataCounter--;
             }
         }
         
     }
-}
-        controls.update();
-        renderer.render(scene, camera);
-        requestAnimationFrame(draw);
+
+    controls.update();
+    renderer.render(scene, camera);
+    requestAnimationFrame(draw);
 
 }
 
