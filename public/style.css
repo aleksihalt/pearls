@@ -1,0 +1,57 @@
+
+  @supports (-webkit-text-stroke: 1px black) {
+    p {
+      -webkit-text-stroke: 1px black;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+body {
+    margin: 0px;
+    background-color: #000000;
+    overflow: hidden;
+  }
+
+  a {
+    background-color: transparent;
+    -webkit-text-stroke: 1px black;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	bottom: -22pt;
+    left: 20pt;
+    font-family: 'Gothic A1', sans-serif;
+    font-weight:900;
+    font-size: 40px;
+}
+
+b {
+    background-color: transparent;
+    text-align: right;
+	width: 400px;
+	height: 100px;
+	position: absolute;
+	bottom: -22pt;
+    right: 20pt;
+    font-family: 'Gothic A1', sans-serif;
+    font-weight:400;
+    font-size: 15px;
+    line-height: 1.5;
+}
+a:hover {
+    -webkit-text-stroke: 1.5px rgb(0,0,0);
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    
+  }
+
+k {
+border: 1px;
+margin-top: 100px;
+border-style: solid;  
+text-align: center; 
+margin-left: 5pt;
+    margin-right: auto;
+}
