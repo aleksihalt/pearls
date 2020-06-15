@@ -1,4 +1,5 @@
-# PEARLS
+# PEARLS 
+## a real-time three.js+firebase multiplayer scene
 
 [SCULPTURE LIVE HERE](https://pearls-4a785.web.app/) Go crazy. 
 
