@@ -33,12 +33,33 @@ b {
 	width: 400px;
 	height: 100px;
 	position: absolute;
-	bottom: -22pt;
+	bottom: -15pt;
     right: 20pt;
     font-family: 'Gothic A1', sans-serif;
     font-weight:400;
     font-size: 15px;
     line-height: 1.5;
+}
+
+c {
+font-family: 'Gothic A1', sans-serif;
+  font-weight:400;
+  font-size: 15px;
+  
+  line-height: 1.5;
+}
+
+
+
+
+
+d {
+  background-color: transparent;
+  text-align: right;
+  font-family: 'Gothic A1', sans-serif;
+  font-weight:400;
+  font-size: 12px;
+  line-height: 1.5;
 }
 a:hover {
     -webkit-text-stroke: 1.5px rgb(0,0,0);
@@ -47,6 +68,17 @@ a:hover {
     
   }
 
+  .centered-element {
+    height: 100px;
+    width: 800px;
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    margin-left: -400px;
+    bottom: -41px;
+    
+  }
+  
 k {
 border: 1px;
 margin-top: 100px;
